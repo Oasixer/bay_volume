@@ -2,3 +2,4 @@ oauth_secret.py
 *.zip
 *.pyc
 venv/
+.env
