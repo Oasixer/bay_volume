@@ -8,16 +8,18 @@ from wrt_lists import *
 from wrt_respond import *
 from wrt_slack_handler import post_to_general
 from wrt_help_messages import agenda_help
+from settings import Settings
 
 
 def handle_agenda_command(user, user_name, text, team_domain):
+    settings = Settings()
     if text == "":
         return get_all_agenda_items(False)
-    elif text == "all" and user == 'U2W19KS75':
+    elif text == "all" and user in settings.admin_users:
         return get_all_agenda_items(True)
     elif text == "clear":
         return clear_user_items(user_name)
-    elif text == "clearall" and (user == 'U2W19KS75' or user == 'U0F29H1L0'):
+    elif text == "clearall" and user in settings.admin_users:
         return clear_all_items()
     elif text.startswith("remove") and len(text.split(' ')) == 2 and text.split(' ')[1].isdigit():
 		return delete_item_by_index(user, user_name, int(text.split(' ')[1]) - 1)

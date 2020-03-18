@@ -1,6 +1,7 @@
 import json
 from urllib.parse import parse_qs
 import logging
+from settings import Settings
 
 from wrt_agenda_command import handle_agenda_command, post_the_agenda, clear_all_items
 logger = logging.getLogger()
