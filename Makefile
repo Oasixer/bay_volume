@@ -1,8 +1,7 @@
 ZIPNAME = lambda
-
-PYTHON_FILES  = lambda_function.py
+FILES = $(wildcard *.py)
 
 .PHONY: all
 all:
-	-rm $(ZIPNAME).zip
-	zip $(ZIPNAME) $(PYTHON_FILES)
+	rm -f $(ZIPNAME).zip~
+	zip $(ZIPNAME) $(FILES)
