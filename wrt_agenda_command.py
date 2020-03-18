@@ -2,7 +2,6 @@ import random
 import time
 import decimal
 
-from oauth_secret import oauth_token
 from wrt_dynamodb_handler import *
 from wrt_lists import *
 from wrt_respond import *
@@ -15,14 +14,15 @@ def handle_agenda_command(user, user_name, text, team_domain):
     settings = Settings()
     if text == "":
         return get_all_agenda_items(False)
-    elif text == "all" and user in settings.admin_users:
-        return get_all_agenda_items(True)
+    elif text == "all" and user in settings.ADMIN_USERS:
+        return post_to_general('MISSILE INBOUND TO HAWAII. SEEK IMMEDIATE SHELTER. THIS IS NOT A DRILL.')
+        #  return get_all_agenda_items(True)
     elif text == "clear":
         return clear_user_items(user_name)
-    elif text == "clearall" and user in settings.admin_users:
+    elif text == "clearall" and user in settings.ADMIN_USERS:
         return clear_all_items()
     elif text.startswith("remove") and len(text.split(' ')) == 2 and text.split(' ')[1].isdigit():
-		return delete_item_by_index(user, user_name, int(text.split(' ')[1]) - 1)
+        return delete_item_by_index(user, user_name, int(text.split(' ')[1]) - 1)
     elif text == "help":
         return respond(None, agenda_help)
     else:
@@ -81,7 +81,7 @@ def get_weekly_items():
     end_time = decimal.Decimal(time.time())
     start_time = decimal.Decimal(end_time - 604800) #that many seconds in a week
     filter_object = lambda x: x['created_at'] > start_time
-    return get_items_from_table('WRT_agenda', filter_object, 'agenda')
+    return get_items_from_table('agenda', filter_object, 'agenda')
 
 def get_all_agenda_items(admin):
     response = get_weekly_items()
