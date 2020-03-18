@@ -60,7 +60,7 @@ def lambda_handler(event, context):
     
     logger.info(f'command={command}')
     
-    if command == '/agenda':
+    if command == '/fjord':
         return handle_agenda_command(user, user_name, text, team_domain)
 
     return {
